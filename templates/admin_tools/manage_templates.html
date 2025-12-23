@@ -1,0 +1,53 @@
+{% extends "admin_tools/base.html" %}
+
+{% block title %}Templates{% endblock %}
+
+{% block page_content %}
+<main>
+  <h1 class="center-align margin">Container templates</h1>
+  <br />
+  <div class="list border margin">
+    {% for template in templates %}
+    <article class="round">
+        <div class="row">
+            <div class="max">
+                <h3>{{template.name}}</h3>
+                <p>proxmox name: {{ template.proxmox_os_template }}</p>
+            </div>
+            <a class="button error" href="{{ url_for("admin_tools.template_remove", name=template.name) }}">
+                <i>delete</i>
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+    <hr class="medium">
+    <div class="center-align">
+        <h2>Map new template</h2>
+        <form method="post">
+            <div class="row center-align">
+                <div class="field border label">
+                    <input type="text" name="name">
+                    <label>Display name</label>
+                </div>
+                <div class="field border label">
+                    <input type="text" name="proxmox_name">
+                    <label>Proxmox name</label>
+                </div>
+            </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class="warn" style="color: crimson;"">
+                    {{messages[0]}}
+                </p>
+            {% endif %}
+            {% endwith %}
+            <br>
+            <button class="primary" href="">
+                <i>add</i>
+                Map template
+            </button>
+        </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

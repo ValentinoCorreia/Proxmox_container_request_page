@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Request sended!{% endblock %}
+
+{% block content %}
+<main>
+    <h1 class="center-align">Request sended!</h1>
+</main>
+<script>
+    setTimeout(
+        () => location.replace("{{ url_for("user_containers.manageContainers") }}"),
+        1000
+    )
+</script>
+{% endblock %}

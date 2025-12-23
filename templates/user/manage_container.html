@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Containers{% endblock %}
+
+{% block content %}
+<main class="center-align margin">
+    <article class="margin">
+    <h1 class="primary-text">{{container.name}} container</h1>
+        <div class="row">
+            <div class="max">
+                <p>Status: <b>{{ lxc_container_status }}</b>
+                    {% if lxc_container_uptime %}
+                    , Uptime: {{ lxc_container_uptime }}
+                    {% endif %}
+                </p>
+            </div>
+            <div>
+                {% if lxc_container_status == "stopped" %}
+                <a class="button"
+                href="{{ url_for("user_containers.container", id=container.id, action="start") }}">
+                    <i>play_circle</i> Start
+                </a>
+                {% else %}
+                <a class="button"
+                href="{{ url_for("user_containers.container", id=container.id, action="stop") }}">
+                    <i>stop_circle</i> Stop
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+</main>
+{% endblock %}

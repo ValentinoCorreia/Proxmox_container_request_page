@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}admin{% endblock %}
+
+{% block content %}
+    {% block page_content %}{% endblock %}
+    <div class="absolute bottom center">
+    <nav class="toolbar margin">
+        <a class="{{ "active" if page == "templates" else "" }}"
+        href="{{ url_for("admin_tools.manage_templates") }}">
+        <i>construction</i>
+        <div>Manage templates</div>
+        </a>
+        <a class="{{ "active" if page == "requests" else "" }}"
+        href="{{ url_for("admin_tools.pending_containers") }}">
+        <i>person_raised_hand</i>
+        <div>Requests</div>
+        </a>
+    </nav>
+    </div>
+{% endblock %}
+</html>

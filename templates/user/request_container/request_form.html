@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Request form{% endblock %}
+
+{% block content %}
+    <main class="absolute center middle">
+        <h1>Request new LXC container</h1>
+        <form method="post">
+            <div class="field label border">
+                <input type="text" name="container_name">
+                <label for="container_name">Container name</label>
+            </div>
+            <div class="row center-align">
+                <div  class="field label border">
+                    <input type="password" name="container_root_password">
+                    <label>Root password</label>
+                </div>
+                <div  class="field label border">
+                    <input type="password" name="container_root_repeat_password">
+                    <label>Root password</label>
+                </div>
+            </div>
+            <hr class="medium">
+            <div>
+                <b>RAM</b>
+                <div class="field middle-align">
+                    <label class="slider">
+                        <input type="range" value="512" min="256" step="256" max="4096"
+                        name="container_ram">
+                        <span></span>
+                        <div class="tooltip"></div>
+                    </label>
+                    <output>MB</output>
+                </div>
+            </div>
+            <div class="row">
+                <div class="max">
+                    <b>OS</b>
+                    <div class="field suffix border large">
+                        <select name="container_os">
+                            {% for os_template in os_templates %}
+                            <option>{{ os_template.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <i>arrow_drop_down</i>
+                        <output>OS template</output>
+                    </div>
+                </div>
+                <div class="max">
+                    <b>CPU speed</b>
+                    <div class="field suffix border large">
+                        <select name="container_cpu">
+                            <option value="slow">snail (slow)</option>
+                            <option value="normal">normal</option>
+                            <option value="fast">Cheetah (fast)</option>
+                        </select>
+                        <i>arrow_drop_down</i>
+                        <output>Max CPU usage</output>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class="warn" style="color: crimson;"">
+                    {{messages[0]}}
+                </p>
+            {% endif %}
+            {% endwith %}
+            <hr class="small">
+
+            <input class="button primary" type="submit" value="Create">
+        </form>
+    </main>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Containers{% endblock %}
+
+{% block content %}
+<main>
+    <h1 class="center-align margin">Containers</h1>
+    <div class="margin">
+        <div>
+            {% if containers %}
+                {% for container in containers %}
+                    <article class="tertiary-container margin padding">
+                        <div class="row">
+                            <div class="max">
+                                <h6 class="small"><b>{{ container.name }}</b> container</h6>
+                                <p>
+                                    OS template: {{ container.template_name }}, <br>
+                                    request status: {{ container.container_status.name }}
+                                </p>
+                            </div>
+                            <button class="primary"
+                            onclick="window.open(
+                                '{{ url_for("user_containers.container", id=container.id, action="show") }}',
+                                '_black'
+                                )"
+                            {% if container.container_status != container_approved %}
+                                disabled
+                            {% endif %}
+                            >
+                                <i>open_in_new</i>
+                                Manage
+                            </button>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>You don't have any containers yet</p>
+            {% endif %}
+        </div>
+        <hr class="medium">
+        <a class="button center margin" href="{{ url_for("user_containers.addContainer") }}">
+            <i>box_add</i> Request new container
+        </a>
+    </div>
+</main>
+{% endblock %}

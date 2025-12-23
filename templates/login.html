@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <main style="max-width: 75%; margin: auto;">
+        <form id="login_form" method="post">
+            <div class="field label border round">
+                <input type="text" id="username_input" name="username" autocomplete="username">
+                <label for="username_input">Username</label>
+            </div>
+            <div class="field label border round">
+                <input type="password" id="password_input" name="password">
+                <label for="password_input">Password</label>
+            </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p class="warn" style="color: crimson;"">
+                    {{messages[0]}}
+                </p>
+            {% endif %}
+            {% endwith %}
+            <br>
+            <input value="Login" type="submit" class="button responsive border primary-border primary-text">
+        </form>
+    </main>
+{% endblock %}

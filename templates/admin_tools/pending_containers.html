@@ -1,0 +1,34 @@
+{% extends "admin_tools/base.html" %}
+
+{% block title %}Container requests{% endblock %}
+
+{% block page_content %}
+<main>
+  <h1 class="center-align margin">Pending container requests</h1>
+  <br>
+  <div class="list border margin">
+    {% for container in containers %}
+    <article class="round">
+      <div class="row">
+        <i>person_raised_hand</i>
+        <div class="max">
+          <h6 class="small primary-text"><b>{{ container.template_name }}</b> container</h6>
+          <div>
+            <b>RAM: {{ container.ram }}MB, CPULimit: {{ container.cpu_limit }}</b><br>
+            Request by: <span class="secondary-text">{{ container.user.username }}</span>
+          </div>
+        </div>
+        <a class="button" onclick="return confirm('Accept this request?')"
+        href="{{ url_for("admin_tools.container_request_action", id=container.id, action="accept" ) }}">
+          <i>check</i>
+        </a>
+        <a class="button error" onclick="return confirm('Delete this request?')"
+        href="{{ url_for("admin_tools.container_request_action", id=container.id, action="refuse" ) }}">
+          <i>delete_forever</i>
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}
