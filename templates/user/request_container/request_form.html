@@ -6,6 +6,7 @@
     <main class="absolute center middle">
         <h1>Request new LXC container</h1>
         <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="field label border">
                 <input type="text" name="container_name">
                 <label for="container_name">Container name</label>

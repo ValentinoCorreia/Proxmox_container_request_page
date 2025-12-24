@@ -41,7 +41,7 @@ def manage_templates():
         templates=db.session.query(ContainerTemplate).all()
     )
 
-@bp.route("template/<name>/remove")
+@bp.post("template/<name>/remove")
 def template_remove(name):
     
     template = db.session.query(ContainerTemplate).filter_by(name=name).one_or_none()
@@ -66,7 +66,7 @@ def pending_containers():
     return render_template("admin_tools/pending_containers.html", containers=containers, page="requests")
 
 
-@bp.route("container/<id>/<action>")
+@bp.post("container/<id>/<action>")
 def container_request_action(id, action):
     try:
         converted_id = int(id)

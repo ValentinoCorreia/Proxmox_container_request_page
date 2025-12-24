@@ -11,12 +11,15 @@ from routes.user import bp as user_bp
 from routes.admin_tools import bp as admin_tools_bp
 from routes.user_containers import bp as user_containers_bp
 
+from flask_wtf.csrf import CSRFProtect
+
 
 app = Flask(__name__)
 app.register_blueprint(user_bp)
 app.register_blueprint(admin_tools_bp, url_prefix='/admin')
 app.register_blueprint(user_containers_bp)
 
+# setup web app env
 app.config['SQLALCHEMY_DATABASE_URI'] = getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///database.db")
 if getenv("SECRET_KEY") == None:
     print("SECRET_KEY variable is not set.")
@@ -24,19 +27,26 @@ if getenv("SECRET_KEY") == None:
 else:
     app.config['SECRET_KEY'] = getenv("SECRET_KEY")
 
+# configurazione ed inizializzazione login
 login_manager = LoginManager()
 login_manager.login_view = "user.login";
 login_manager.init_app(app)
+
 @login_manager.user_loader
 def load_user(user_id):
     stmt = db.select(User).filter_by(id=user_id)
     user = db.session.execute(stmt).scalar_one_or_none()
     return user
 
+# inizializzazione altre estensioni
 
 db.init_app(app)
 migrate = Migrate(app, db)
 
+csrf = CSRFProtect()
+csrf.init_app(app)
+
+# root redirect
 @app.route("/")
 @login_required
 def index():

@@ -19,14 +19,14 @@ class ContainerTemplate(db.Model):
     
 
 class Container(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True) # id usato dall'applicativo
     name: Mapped[str] = mapped_column(AlchemyString(length=80))
     cpu_limit: Mapped[int] = mapped_column(default=0)
     ram: Mapped[int] = mapped_column(default=512)
     template_name: Mapped[str] = mapped_column(ForeignKey("container_template.name"))
     template: Mapped[ContainerTemplate] = relationship(foreign_keys=[template_name])
     initial_root_password: Mapped[str] = mapped_column(nullable=False)
-    container_status = mapped_column(AlchemyEnum(ContainerRequestStatus))
+    container_status = mapped_column(AlchemyEnum(ContainerRequestStatus)) # id usato da Proxmox
     lxc_proxmox_id: Mapped[int] = mapped_column(nullable=True)
     user: Mapped["User"] = relationship(back_populates="containers")
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))

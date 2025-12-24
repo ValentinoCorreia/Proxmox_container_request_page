@@ -18,14 +18,20 @@
             Request by: <span class="secondary-text">{{ container.user.username }}</span>
           </div>
         </div>
-        <a class="button" onclick="return confirm('Accept this request?')"
-        href="{{ url_for("admin_tools.container_request_action", id=container.id, action="accept" ) }}">
-          <i>check</i>
-        </a>
-        <a class="button error" onclick="return confirm('Delete this request?')"
-        href="{{ url_for("admin_tools.container_request_action", id=container.id, action="refuse" ) }}">
-          <i>delete_forever</i>
-        </a>
+        <form action="{{ url_for("admin_tools.container_request_action", id=container.id, action="accept" ) }}"
+        method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <button onclick="return confirm('Accept this request?')">
+            <i>check</i>
+          </button>
+        </form>
+        <form action="{{ url_for("admin_tools.container_request_action", id=container.id, action="refuse" ) }}"
+        method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <button class="error" onclick="return confirm('Delete this request?')">
+            <i>delete_forever</i>
+          </button>
+      </form>
       </div>
     </article>
     {% endfor %}
