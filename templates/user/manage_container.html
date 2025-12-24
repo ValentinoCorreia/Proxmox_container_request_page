@@ -15,10 +15,8 @@
                 </p>
             </div>
             <div>
-                <form action="{{ url_for("user_containers.container",
-                    id=container.id,
-                    action=("start" if lxc_container_status == "stopped" else "stop")
-                    ) }}" method="post">
+                <form action="{{ url_for("user_containers.container", id=container.id, action=("start" if lxc_container_status == "stopped" else "stop") ) }}"
+                method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     {% if  %}
                         <button>
