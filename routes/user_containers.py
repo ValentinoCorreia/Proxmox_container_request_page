@@ -13,7 +13,7 @@ from utils.proxmox.lxc_manager import getLXCContainerStatus, StopLXCContainer, S
 
 bp = Blueprint("user_containers", __name__)
 
-@bp.get("/container/<id>/<action>")
+@bp.route("/container/<id>/<action>", methods=["GET", "POST"])
 @login_required
 def container(id: int, action = "show"):
     container_id = int(id)
@@ -24,9 +24,9 @@ def container(id: int, action = "show"):
     ).one_or_none()
 
     if (container):
-        if (action == "stop"):
+        if (action == "stop" and request.method == "POST"):
             print("stopped:", StopLXCContainer(container.lxc_proxmox_id))
-        elif (action == "start"):
+        elif (action == "start" and request.method == "POST"):
             print("started:", StartLXCContainer(container.lxc_proxmox_id))
         lxc_full_status_info = getLXCContainerStatus(container.lxc_proxmox_id)
         return render_template("user/manage_container.html",
